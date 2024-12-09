@@ -1,11 +1,17 @@
 import axios from "axios";
 
-interface User {
+interface loginForm {
     email: string;
     password: string;
 }
 
-export const login = async (data: User) => {
+interface registerForm {
+    email: string,
+    password: string,
+    name: string
+}
+
+export const login = async (data: loginForm) => {
     try {
         const response = await axios.post("/api/v1/auth/login", data);
         return response.data;
@@ -14,9 +20,11 @@ export const login = async (data: User) => {
     }
 };
 
-export const register = async (data: any) => {
+export const register = async (data: registerForm) => {
     try {
+        console.log("hit register")
         const response = await axios.post("/api/v1/auth/register", data);
+        console.log(response.data)
         return response.data;
     } catch (error) {
         throw error;
