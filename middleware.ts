@@ -9,7 +9,7 @@ const checkCookies = (request: NextRequest, value: string) => {
 
 export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/login")) {
-    const token = checkCookies(request, "token");   
+    const token = checkCookies(request, "_token");   
     if (token) return NextResponse.redirect(new URL("/", request.url));
   }
 }

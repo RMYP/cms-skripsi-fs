@@ -40,7 +40,7 @@ export function TestLoginForm() {
         setError(data.error);
         return;
       }
-      setCookie("token", data.token, {
+      setCookie("_token", data.data._token, {
         maxAge: 60 * 60 * 24,
       });
 

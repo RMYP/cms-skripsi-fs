@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import * as jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { JWT_SECRET } from "@/lib/envConfig";
 
 export async function POST(request: Request) {
   try {
@@ -14,6 +15,8 @@ export async function POST(request: Request) {
         user: true,
       },
     });
+
+    console.log(checkAccount)
 
     if (!checkAccount) {
       return Response.json({
@@ -41,15 +44,16 @@ export async function POST(request: Request) {
     };
     const _token =
       "Bearer " +
-      jwt.sign(payload, "rahasia", {
+      jwt.sign(payload, JWT_SECRET, {
         expiresIn: "1d",
       });
 
+    console.log("ini token dari route", _token)
     return Response.json({
       status: 200,
       success: true,
       data: {
-        token: _token,
+        _token: _token,
       },
     });
   } catch (err: any) {

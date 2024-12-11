@@ -13,6 +13,7 @@ interface registerForm {
 
 export const login = async (data: loginForm) => {
     try {
+        console.log(data)
         const response = await axios.post("/api/v1/auth/login", data);
         return response.data;
     } catch (error) {
