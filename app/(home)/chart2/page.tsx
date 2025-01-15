@@ -3,19 +3,17 @@
 import Navbar from "@/components/navbar";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { useCheckChart } from "@/hooks/store";
-import { Button } from "@/components/ui/button";
 import { Plus, Minus } from "lucide-react";
 import { getCookie } from "cookies-next";
 import { getChart, ChartProduct, updateChart } from "../action/action";
 
 export default function Page() {
   const products = useCheckChart((state) => state.products);
-  const details = useCheckChart((state) => state.index);
+  // const details = useCheckChart((state) => state.index);
   const addChart = useCheckChart((state) => state.addToChart);
   const removeChart = useCheckChart((state) => state.removeFromChart);
   const addQuantity = useCheckChart((state) => state.addQuantity);
@@ -60,10 +58,12 @@ export default function Page() {
           const data = await getChart(token);
           setGetProduct(data);
         } else {
-          throw new Error();
+          throw new Error("token not found");
         }
-      } catch (err) {
+      } catch (err: unknown) {
         console.log("token not found");
+        const message = err instanceof Error ? err.message : "unexpected error";
+        return message;
       }
     };
     token();
@@ -73,16 +73,24 @@ export default function Page() {
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
-    const response = async () => {
-      const data = await updateChart(temporaryQuantity, token);
+
+    const debounceUpdate = async () => {
+      if (token) {
+        await updateChart(temporaryQuantity, token);
+        setUpdateData((prev) => prev + 1);
+      }
     };
+
     debounceTimeout.current = setTimeout(() => {
-      response();
+      debounceUpdate();
     }, 1500);
-    debounceTimeout.current = setTimeout(() => {
-      setUpdateData(updateData + 1);
-    }, 3000);
-  }, [temporaryQuantity]);
+
+    return () => {
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
+      }
+    };
+  }, [temporaryQuantity, token]);
 
   return (
     <div>
@@ -127,7 +135,9 @@ export default function Page() {
                     <div className="flex flex-col justify-between mt-2 items-end">
                       {/* Price */}
                       <div className="font-bold text-lg">
-                        ${product.totalPrice.toFixed(2)}
+                        $
+                        {product.product.price &&
+                          product.product.price.toFixed(2)}
                       </div>
                       {/* Input for Quantity */}
                       <div className="flex items-center space-x-2 mt-4 border rounded-3xl">

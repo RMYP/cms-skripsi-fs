@@ -95,5 +95,12 @@ export const updateChart = async (
       { updatedProducts },
       { headers: { Authorization: `bearer ${token}` } }
     );
-  } catch (err) {}
+    if (response.status == 200) {
+      return true;
+    } else {
+      throw new Error(response.data.message);
+    }
+  } catch (err: unknown) {
+    return err instanceof Error ? err.message : "Unexpected Error";
+  }
 };

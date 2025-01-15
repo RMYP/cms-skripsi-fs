@@ -5,7 +5,6 @@ export async function POST(request: Request) {
   try {
     const { productId, quantity } = await request.json();
     const token = request.headers.get("authorization");
-    let userId = "";
     let chart;
 
     if (!token) {
@@ -40,7 +39,10 @@ export async function POST(request: Request) {
     const checkProduct = await prisma.chart.findFirst({
       where: {
         productId: productId,
-        userId: decoded.id  
+        userId: decoded.id,
+      }, 
+      include: {
+        product: true
       },
     });
 
@@ -61,6 +63,7 @@ export async function POST(request: Request) {
           productId: productId,
           quantity: quantity,
           timeStamp: new Date(),
+          totalPrice: 0
         },
       });
     }

@@ -6,7 +6,6 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  TableCaption,
 } from "@/components/ui/table";
 
 interface User {

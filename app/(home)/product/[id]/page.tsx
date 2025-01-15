@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 export default function SingleProductPage() {
   return (
     <div>
-      <Navbar />
+      <Navbar isLogin={true} />
       <div className="container mx-auto mt-5 p-4 grid grid-cols-1 md:grid-cols-2 gap-6 bg-white">
         <div className="flex justify-center items-center">
           <Image

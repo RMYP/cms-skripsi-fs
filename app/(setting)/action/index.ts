@@ -1,4 +1,3 @@
-import axios from "axios";
 import prisma from "@/lib/prisma";
 import { getCookies } from "@/lib/tokenValue";
 import { checkJwt } from "@/lib/jwt";
@@ -10,15 +9,15 @@ interface UserInfo {
   token: string;
 }
 
-const getUserInfo = async (id: string) => {
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: id,
-      },
-    });
-  } catch (err: any) {}
-};
+// const getUserInfo = async (id: string) => {
+//   try {
+//     const user = await prisma.user.findUnique({
+//       where: {
+//         id: id,
+//       },
+//     });
+//   } catch (err: any) {}
+// };
 
 export const getUserId = async (): Promise<UserInfo> => {
   const token = await getCookies();

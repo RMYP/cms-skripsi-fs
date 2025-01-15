@@ -6,7 +6,6 @@ import Navbar from "@/components/navbar";
 import {
   getHomepage,
   Product,
-  getProductById,
   checkLoginStatus,
 } from "./action/action";
 import { useEffect, useState } from "react";
@@ -21,6 +20,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { error } from "console";
 
 export default function Home() {
   const [productArray, setProductArray] = useState<Product[]>([]);
@@ -35,7 +35,8 @@ export default function Home() {
     const checkLogin = async () => {
       try {
         setIsLogin(await checkLoginStatus());
-      } catch (err) {
+      } catch (err: unknown) {
+        if(err instanceof Error) console.log(err.message)
         setIsLogin(false);
       }
     };
@@ -48,8 +49,13 @@ export default function Home() {
         } else {
           setIsError("Failed to load products, please try again");
         }
-      } catch (err) {
-        setIsError("Unexpected server error");
+      } catch (err: unknown) {
+        if(err instanceof Error) {
+          setIsError(err.message);
+        } else {
+          setIsError("Unexpected server error");
+        }
+        
       }
     };
     checkLogin();
@@ -86,8 +92,8 @@ export default function Home() {
         <div className="relative overflow-hidden shadow-md py-2 border-2 mx-2 my-4 hidden sm:flex">
           <div className="whitespace-nowrap animate-scroll">
             <span className="text-lg">
-              "Rizki Putra E-Commerce Prototype – Shaping Innovation, Welcoming
-              Feedback for a Better Future!"
+              `Rizki Putra E-Commerce Prototype – Shaping Innovation, Welcoming
+              Feedback for a Better Future!``
             </span>
           </div>
         </div>
