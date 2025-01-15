@@ -1,45 +1,47 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+
+interface dataObject {
+  title: string;
+  href: string;
+}
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
-    href: string;
     title: string;
+    icon: string;
+    data: dataObject[];
   }[];
 }
 
+
 export function AppSidebar({ className, items, ...props }: SidebarNavProps) {
-  const [mounted, setMounted] = useState(false);
   const path = usePathname();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
   return (
     <nav
       className={`flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 gap-2 ps-2 ${className}`}
       {...props}
     >
       {items.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className={
-            path == item.href
-              ? "bg-muted hover:bg-muted text-lg ps-4 rounded-sm py-1"
-              : "hover:bg-transparent hover:underline text-lg ps-4 py-1"
-          }
-        >
-          {item.title}
-        </Link>
+        <div key={item.title} className="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 gap-2 ps-2">
+          <p className="text-lg" >{item.title}</p>
+          {item.data.map((subItem) => (
+            <Link
+              key={subItem.href}
+              href={subItem.href}
+              className={
+                path === subItem.href
+                  ? "bg-muted hover:bg-muted text-md ps-4 rounded-sm py-1"
+                  : "hover:bg-transparent hover:underline text-md ps-4 py-1"
+              }
+            >
+              {subItem.title}
+            </Link>
+          ))}
+        </div>
       ))}
     </nav>
   );

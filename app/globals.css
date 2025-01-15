@@ -78,11 +78,15 @@ body {
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
   }
-  body {
-    @apply bg-background text-foreground;
+  100% {
+    transform: translateX(-100%);
   }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
 }

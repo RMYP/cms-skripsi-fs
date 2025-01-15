@@ -14,15 +14,53 @@ datasource db {
 }
 
 model User {
-  id   String  @id @default(cuid())
-  name String?
-  Auth Auth[]
+  id       String  @id @default(cuid())
+  name     String?
+  phoneNum String?
+  Auth     Auth[]
+  Chart    Chart?
 }
 
 model Auth {
   id       String @id @default(cuid())
   userId   String @unique
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  email    String //@unique
+  email    String @unique
   password String
+}
+
+model Address {
+  id              String  @id @default(cuid())
+  completeAddress String
+  recepientName   String
+  defaultAddress  Boolean @default(false)
+}
+
+model Category {
+  id           String    @id @default(cuid())
+  categoryName String    @unique
+  Product      Product[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  productName String
+  price       Float
+  quantity    Int
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  tag         String
+  // description String
+  Chart       Chart[]
+}
+
+model Chart {
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id])
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
+  quantity   Int
+  timeStamp  DateTime
+  totalPrice Int
 }

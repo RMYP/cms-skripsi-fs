@@ -1,14 +1,9 @@
 import Profile from "../components/dashboard";
 import { getUserId } from "../action";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const id = (await params).id;
-  console.log(await getUserId())
+export default async function Page() {
+  const userInfo = await getUserId()
   return(
-    <Profile value={id}/>
+    <Profile user={userInfo}/>
   )
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { login, register } from "../action/index";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -36,8 +36,8 @@ export function TestLoginForm() {
   const onSubmit = async (value: z.infer<typeof loginSchema>) => {
     try {
       const data = await login(value);
-      if (data.error) {
-        setError(data.error);
+      if (data.success == false) {
+        setError(data.message);
         return;
       }
       setCookie("_token", data.data._token, {
@@ -45,8 +45,13 @@ export function TestLoginForm() {
       });
 
       router.push("/");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      }else{
+        setError("Unexpected Error, please try again")
+        console.log(err)
+      }
     }
   };
 
@@ -111,7 +116,6 @@ export function TestRegisterForm() {
 
   const onSubmit = async (value: z.infer<typeof registerSchema>) => {
     try {
-      console.log(value)
       const data = await register(value);
       if (data.status == "404") {
         setError(data.message);
@@ -119,8 +123,12 @@ export function TestRegisterForm() {
       }
 
       router.push("/login");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      }else{
+        setError("Unexpected Error, please try again")
+      }
     }
   };
 

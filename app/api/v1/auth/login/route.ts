@@ -16,14 +16,14 @@ export async function POST(request: Request) {
       },
     });
 
-    console.log(checkAccount)
-
     if (!checkAccount) {
-      return Response.json({
-        status: 404,
-        success: false,
-        message: "Account not found",
-      });
+      return Response.json(
+        {
+          status: 404,
+          success: false,
+          message: "Account not found",
+        },
+      );
     }
 
     const checkPassword = bcrypt.compareSync(
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       });
     }
     const payload = {
-      id: checkAccount.id,
+      id: checkAccount.user.id,
       email: checkAccount.email,
       user: checkAccount.user.name,
     };
@@ -48,19 +48,23 @@ export async function POST(request: Request) {
         expiresIn: "1d",
       });
 
-    console.log("ini token dari route", _token)
-    return Response.json({
-      status: 200,
-      success: true,
-      data: {
-        _token: _token,
+    return Response.json(
+      {
+        status: 201,
+        success: true,
+        data: {
+          _token: _token,
+        },
       },
-    });
+    );
   } catch (err: any) {
-    return Response.json({
-      status: 500,
-      success: false,
-      message: err.message,
-    });
+    return Response.json(
+      {
+        status: 500,
+        success: false,
+        message: err.message,
+      },
+      { status: 500 }
+    );
   }
 }
