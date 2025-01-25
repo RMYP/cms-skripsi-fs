@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export default function page() {
+export default function Page() {
   return (
     <div className="bg-white w-full p-3 sm:p-1 rounded-sm">
       <Card className={cn("border-gray-800 shadow-md shadow-gray-900")}>

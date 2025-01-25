@@ -1,14 +1,18 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/lJwnQlHSEBA
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import { LogIn, UserRound, ShoppingCart, Bell } from "lucide-react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useLogin } from "@/hooks/user-info-store";
+import { useEffect } from "react";
 
-export default function Nabar({ isLogin }: { isLogin: boolean }) {
+export default function Navbar() {
+  const isLogin = useLogin((state) => state.loginStatus);
+  const setCookies = useLogin((state) => state.setCookiesStore);
+  
+  useEffect(() => {
+    setCookies(true);
+  }, [isLogin]);
+
   return (
     <header className="flex lg:justify-between h-20 w-full shrink-0 items-center px-4 md:px-6 bg-white shadow-sm ">
       <Sheet>
@@ -98,7 +102,7 @@ export default function Nabar({ isLogin }: { isLogin: boolean }) {
       </nav>
       {isLogin ? (
         <div className="pe-5 flex gap-5">
-          <Link href={'/notification'}>
+          <Link href={"/notification"}>
             <Bell />
           </Link>
           <Link href={"/chart"}>

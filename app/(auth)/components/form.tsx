@@ -48,9 +48,9 @@ export function TestLoginForm() {
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
-      }else{
-        setError("Unexpected Error, please try again")
-        console.log(err)
+      } else {
+        setError("Unexpected Error, please try again");
+        console.log(err);
       }
     }
   };
@@ -126,8 +126,8 @@ export function TestRegisterForm() {
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
-      }else{
-        setError("Unexpected Error, please try again")
+      } else {
+        setError("Unexpected Error, please try again");
       }
     }
   };

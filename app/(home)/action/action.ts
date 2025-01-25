@@ -4,10 +4,10 @@ import { updateQuantity } from "@/hooks/store";
 export interface Product {
   id: string;
   productName: string;
-  price: number | undefined;
-  quantity: number | undefined;
-  categoryId: string | undefined;
-  tag: string | undefined;
+  price: number;
+  quantity: number;
+  categoryId: string;
+  tag: string;
 }
 
 export interface ChartProduct {
@@ -86,7 +86,7 @@ export const getChart = async (token: string) => {
 };
 
 export const updateChart = async (
-  updatedProducts: updateQuantity[],
+  updatedProducts: ChartProduct,
   token: string
 ) => {
   try {

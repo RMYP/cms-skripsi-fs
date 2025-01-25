@@ -22,12 +22,12 @@ interface UserInfo {
 export const getUserId = async (): Promise<UserInfo> => {
   const token = await getCookies();
 
-  if (!token || !token.value) {
+  if (!token) {
     throw new Error("Authentication token is missing.");
   }
 
   try {
-    const decoded = await checkJwt(token.value);
+    const decoded = await checkJwt(token);
 
     if (!decoded) {
       throw new Error("Invalid token payload.");

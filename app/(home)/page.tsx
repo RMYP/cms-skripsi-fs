@@ -86,7 +86,7 @@ export default function Home() {
 
   return (
     <div>
-      <Navbar isLogin={isLogin} />
+      <Navbar/>
       <div className="container mx-auto">
         <Banner />
         <div className="relative overflow-hidden shadow-md py-2 border-2 mx-2 my-4 hidden sm:flex">
@@ -136,7 +136,7 @@ export default function Home() {
                         className="w-full hover:bg-zinc-800 hover:text-white hover:font-bold mt-1"
                         variant="outline"
                       >
-                        Masukan Keranjang
+                        Add
                       </Button>
                     </CardFooter>
                   </Card>
