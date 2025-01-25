@@ -30,7 +30,7 @@ export default function Page() {
           <div>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa porro
             unde ducimus corrupti facere magni itaque dicta accusantium
-            voluptates, culpa necessitatibus dignissimos amet, voluptatum iste
+            voluptates, culpa necessitatibus dignissimos amet, voluptatu  m iste
             distinctio earum assumenda ad deleniti?
           </div>
         </div>

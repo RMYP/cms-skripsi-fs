@@ -11,7 +11,7 @@ export default function Navbar() {
   
   useEffect(() => {
     setCookies(true);
-  }, [isLogin]);
+  }, [isLogin, setCookies]);
 
   return (
     <header className="flex lg:justify-between h-20 w-full shrink-0 items-center px-4 md:px-6 bg-white shadow-sm ">

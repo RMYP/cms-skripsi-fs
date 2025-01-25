@@ -39,13 +39,16 @@ export default function Page() {
           throw new Error("Gagal mengakses data, coba lagi");
         }
       } catch (err: unknown) {
-        err instanceof Error
-          ? setError(err.message)
-          : setError("Unexpected server error");
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Unexpected server error");
+        }
+        return;
       }
     };
     fetchChart();
-  }, []);
+  }, [setChart, setError, token]);
 
   useEffect(() => {
     const debounceUpdateFn = async () => {
@@ -55,9 +58,12 @@ export default function Page() {
           console.log(response);
         }
       } catch (err: unknown) {
-        err instanceof Error
-          ? setError(err.message)
-          : setError("Unexpected server error");
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Unexpected server error");
+        }
+        return;
       }
     };
 
@@ -74,7 +80,7 @@ export default function Page() {
         clearTimeout(debounceTimeout.current);
       }
     };
-  }, [updateProduct]);
+  }, [updateProduct, setError, token]);
   const addQuantity = (id: string, currentQuantity: number) => {
     setQuantity(currentQuantity + 1, id);
   };
@@ -156,7 +162,8 @@ export default function Page() {
                       <Skeleton className="ms-2 w-24 h-24" />{" "}
                       <div>
                         <Skeleton className="w-32 h-5 mb-2" />{" "}
-                        <Skeleton className="w-20 h-5" />{" "}                      </div>
+                        <Skeleton className="w-20 h-5" />{" "}
+                      </div>
                     </div>
                     <div className="px-2 grid grid-cols-1 md:grid-cols-1">
                       <Skeleton className="w-16 h-5 mb-2" />{" "}

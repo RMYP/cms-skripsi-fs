@@ -13,7 +13,7 @@ export function ToastDestructive({ message }: { message: string }) {
       description: message,
       action: <ToastAction altText="Try again">Try again</ToastAction>,
     });
-  }, [toast]);
+  }, [toast, message]);
 
   return null;
 }
